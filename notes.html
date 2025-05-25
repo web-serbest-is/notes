@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notlar - TələbəLife</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">TələbəLife</a>
+            <div class="nav-links">
+                <a href="index.html">Ana Səhifə</a>
+                <a href="groups.html">Qruplar</a>
+                <a href="notes.html" class="active">Notlar</a>
+                <a href="events.html">Tədbirlər</a>
+                <a href="discounts.html">Endirimlər</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="notes-header">
+            <h1>Notlar</h1>
+            <div class="notes-actions">
+                <div class="search-box">
+                    <input type="text" class="search-input" placeholder="Notlarda axtar...">
+                    <button class="search-button">🔍</button>
+                </div>
+                <button class="upload-button" onclick="document.getElementById('fileInput').click()">
+                    <span>📤 Not Yüklə</span>
+                </button>
+                <input type="file" id="fileInput" class="file-input" accept=".pdf,.doc,.docx,.txt" hidden>
+            </div>
+        </div>
+
+        <div class="filter-buttons">
+            <button class="filter-button active" data-filter="all">Hamısı</button>
+            <button class="filter-button" data-filter="math">Riyaziyyat</button>
+            <button class="filter-button" data-filter="physics">Fizika</button>
+            <button class="filter-button" data-filter="chemistry">Kimya</button>
+            <button class="filter-button" data-filter="programming">Proqramlaşdırma</button>
+        </div>
+
+        <div class="notes-grid">
+            <div class="note-card filterable-item" data-category="math">
+                <div class="note-header">
+                    <h3 class="note-title">Riyaziyyat - İnteqrallar</h3>
+                    <span class="note-badge">Riyaziyyat</span>
+                </div>
+                <p class="note-description">İnteqrallar haqqında ətraflı notlar və nümunələr.</p>
+                <div class="note-meta">
+                    <span class="note-author">Əli Məmmədov</span>
+                    <span class="note-date">15.03.2025</span>
+                </div>
+                <div class="note-actions">
+                    <button class="download-button">📥 Yüklə</button>
+                    <button class="share-button">📤 Paylaş</button>
+                    <button class="like-button">❤️ 24</button>
+                </div>
+            </div>
+
+            <div class="note-card filterable-item" data-category="physics">
+                <div class="note-header">
+                    <h3 class="note-title">Fizika - Mexanika</h3>
+                    <span class="note-badge">Fizika</span>
+                </div>
+                <p class="note-description">Mexanika qanunları və tətbiqləri.</p>
+                <div class="note-meta">
+                    <span class="note-author">Ayşə Əliyeva</span>
+                    <span class="note-date">10.03.2025</span>
+                </div>
+                <div class="note-actions">
+                    <button class="download-button">📥 Yüklə</button>
+                    <button class="share-button">📤 Paylaş</button>
+                    <button class="like-button">❤️ 18</button>
+                </div>
+            </div>
+
+            <div class="note-card filterable-item" data-category="programming">
+                <div class="note-header">
+                    <h3 class="note-title">JavaScript - ES6+</h3>
+                    <span class="note-badge">Proqramlaşdırma</span>
+                </div>
+                <p class="note-description">Modern JavaScript xüsusiyyətləri və istifadəsi.</p>
+                <div class="note-meta">
+                    <span class="note-author">Məhəmməd Həsənli</span>
+                    <span class="note-date">05.03.2025</span>
+                </div>
+                <div class="note-actions">
+                    <button class="download-button">📥 Yüklə</button>
+                    <button class="share-button">📤 Paylaş</button>
+                    <button class="like-button">❤️ 32</button>
+                </div>
+            </div>
+
+            <div class="note-card filterable-item" data-category="chemistry">
+                <div class="note-header">
+                    <h3 class="note-title">Kimya - Reaksiyalar</h3>
+                    <span class="note-badge">Kimya</span>
+                </div>
+                <p class="note-description">Kimyəvi reaksiyalar və onların növləri.</p>
+                <div class="note-meta">
+                    <span class="note-author">Zeynəb Qurbanova</span>
+                    <span class="note-date">01.03.2025</span>
+                </div>
+                <div class="note-actions">
+                    <button class="download-button">📥 Yüklə</button>
+                    <button class="share-button">📤 Paylaş</button>
+                    <button class="like-button">❤️ 15</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 TələbəLife. Bütün hüquqlar qorunur.</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Not yükləmə
+            const fileInput = document.getElementById('fileInput');
+            fileInput.addEventListener('change', function(e) {
+                if (this.files.length > 0) {
+                    showNotification('Fayl uğurla yükləndi!', 'success');
+                    this.value = '';
+                }
+            });
+
+            // Axtarış
+            const searchInput = document.querySelector('.search-input');
+            searchInput.addEventListener('input', function(e) {
+                const searchTerm = e.target.value.toLowerCase();
+                const notes = document.querySelectorAll('.note-card');
+                
+                notes.forEach(note => {
+                    const title = note.querySelector('.note-title').textContent.toLowerCase();
+                    const description = note.querySelector('.note-description').textContent.toLowerCase();
+                    
+                    if (title.includes(searchTerm) || description.includes(searchTerm)) {
+                        note.style.display = 'block';
+                    } else {
+                        note.style.display = 'none';
+                    }
+                });
+            });
+
+            // Filtrləmə
+            const filterButtons = document.querySelectorAll('.filter-button');
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+
+                    const filter = button.getAttribute('data-filter');
+                    const notes = document.querySelectorAll('.note-card');
+
+                    notes.forEach(note => {
+                        if (filter === 'all' || note.getAttribute('data-category') === filter) {
+                            note.style.display = 'block';
+                            note.style.animation = 'fadeIn 0.5s ease';
+                        } else {
+                            note.style.display = 'none';
+                        }
+                    });
+                });
+            });
+
+            // Düymə funksiyaları
+            const downloadButtons = document.querySelectorAll('.download-button');
+            downloadButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const noteTitle = this.closest('.note-card').querySelector('.note-title').textContent;
+                    showNotification(`${noteTitle} yüklənir...`, 'info');
+                });
+            });
+
+            const shareButtons = document.querySelectorAll('.share-button');
+            shareButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const noteTitle = this.closest('.note-card').querySelector('.note-title').textContent;
+                    showNotification(`${noteTitle} paylaşım linki kopyalandı!`, 'success');
+                });
+            });
+
+            const likeButtons = document.querySelectorAll('.like-button');
+            likeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const likes = this.textContent.split(' ')[1];
+                    const newLikes = parseInt(likes) + 1;
+                    this.textContent = `❤️ ${newLikes}`;
+                    showNotification('Bəyənməniz qeydə alındı!', 'success');
+                });
+            });
+        });
+    </script>
+</body>
+</html> 
